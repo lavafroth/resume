@@ -24,14 +24,14 @@
             (writeScriptBin "build" ''
               #!/usr/bin/env bash
               function buildit {
-                ${pkgs.pandoc}/bin/pandoc -V colorlinks=true -V monofont="DejaVu Sans Mono" --pdf-engine tectonic --include-in-header inline.tex "$1.md" -o "$1.pdf"
+                ${pkgs.pandoc}/bin/pandoc -V colorlinks=true -V monofont="DejaVu Sans Mono" --pdf-engine tectonic --include-in-header inline.tex "resume.md" -o "resume.pdf"
               }
 
-              buildit "$1"
-              ${pkgs.inotify-tools}/bin/inotifywait -qm -e close_write "$1.md" |
+              buildit "resume.md"
+              ${pkgs.inotify-tools}/bin/inotifywait -qm -e close_write "resume.md" |
               while read
               do
-                buildit "$1"
+                buildit "resume.md"
               done
             '')
         ];
